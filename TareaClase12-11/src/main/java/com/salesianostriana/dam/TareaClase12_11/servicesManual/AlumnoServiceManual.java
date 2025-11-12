@@ -1,7 +1,8 @@
-package com.salesianostriana.dam.TareaClase12_11.services;
+package com.salesianostriana.dam.TareaClase12_11.servicesManual;
 
 import com.salesianostriana.dam.TareaClase12_11.dto.AlumnoDTO;
 import com.salesianostriana.dam.TareaClase12_11.mapper.AlumnoMapper;
+import com.salesianostriana.dam.TareaClase12_11.mapper.AlumnoMapperManual;
 import com.salesianostriana.dam.TareaClase12_11.model.Alumno;
 import com.salesianostriana.dam.TareaClase12_11.repository.AlumnoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,23 +13,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AlumnoService {
+public class AlumnoServiceManual {
 
     private final AlumnoRepository alumnoRepository;
-    private final AlumnoMapper alumnoMapper;
 
-    public AlumnoDTO findById(Long id) {
+
+    public  AlumnoDTO findById(Long id){
         return alumnoRepository.findById(id)
-                .map(alumnoMapper::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .map(AlumnoMapperManual::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Alumno not found"));
     }
 
-    public AlumnoDTO create(AlumnoDTO dto) {
-        Alumno user = alumnoMapper.toEntity(dto);
-        return alumnoMapper.toDto(alumnoRepository.save(user));
+    public AlumnoDTO create(AlumnoDTO dto){
+        Alumno alumno = AlumnoMapperManual.toEntity(dto);
+        Alumno saved =  alumnoRepository.save(alumno);
+        return AlumnoMapperManual.toDto(saved);
     }
 
-    public List<AlumnoDTO> findAll() {
-        return alumnoMapper.toDtoList(alumnoRepository.findAll());
-    }
 }

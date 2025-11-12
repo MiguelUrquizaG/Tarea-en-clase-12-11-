@@ -15,7 +15,7 @@ public class ProductoMapperManual {
         return new ProductoDTO(
                 producto.getNombre(),
                 producto.getPvp(),
-                producto.getImagenes(),
+                producto.getImagenes().getFirst(),
                 producto.getCategoria().getNombre()
         );
     }
@@ -26,7 +26,7 @@ public class ProductoMapperManual {
         return Producto.builder()
                 .nombre(dto.nombre())
                 .pvp(dto.pvp())
-                .imagenes(dto.imagen())
+                .imagenes(dto.imagen().lines().toList())
                 .categoria(productoRepository.findByNombre(dto.categoria()).get())
                 .build();
     }
